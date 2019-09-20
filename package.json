@@ -1,0 +1,53 @@
+{
+  "name": "eu-tin-validation",
+  "version": "0.0.1",
+  "description": "Javascript function to check TIN validation using European Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "watch": "rollup -c --watch",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opificio-lamantini-anonimi/eu-tin-validation.git"
+  },
+  "keywords": [
+    "tin",
+    "eu",
+    "validation",
+    "european",
+    "codice",
+    "fiscale"
+  ],
+  "author": "Opificio Lamantini Anonimi",
+  "license": "ISC",
+  "dependencies": {
+    "http": "0.0.0",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^24.9.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-rewire": "^1.2.0",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-flowtype": "^4.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "flow-bin": "^0.108.0",
+    "flow-typed": "^2.6.1",
+    "jest": "^24.9.0",
+    "rollup": "^1.21.4",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-cpy": "^2.0.1",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-terser": "^5.1.2"
+  }
+}
