@@ -1,10 +1,11 @@
 {
   "name": "eu-tin-validation",
-  "version": "0.0.1",
-  "description": "Javascript function to check TIN validation using European Service",
-  "main": "index.js",
+  "version": "0.1.1",
+  "description": "Javascript function to check TIN and VAT validation using European SOAP Service inspired by validate-vat @viruschidai",
+  "main": "lib/index.js",
   "scripts": {
     "test": "jest",
+    "ask": "npm run-script build && node ./lib/test.js",
     "watch": "rollup -c --watch",
     "build": "rollup -c"
   },
@@ -24,6 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "http": "0.0.0",
+    "https": "^1.0.0",
     "url": "^0.11.0"
   },
   "devDependencies": {

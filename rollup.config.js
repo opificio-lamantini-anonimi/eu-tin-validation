@@ -26,6 +26,10 @@ const plugins = targets => ([
     files: ['src/*.flow'],
     dest: 'lib',
   }),
+  copy({
+    files: ['src/test.js'],
+    dest: 'lib',
+  }),
 ]);
 
 // packages that should be treated as external dependencies, not bundled
