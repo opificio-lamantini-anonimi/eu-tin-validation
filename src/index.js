@@ -7,7 +7,7 @@ import countries from './lib/countries';
 import getErrorMessage from './lib/errors';
 import parseSoapResponse from './lib/parseSoapResponse';
 
-export default function(endpoint, countryCode, docNumber, timeout, callback) {
+export default async function(endpoint, countryCode, docNumber, timeout, callback) {
 
     if(typeof timeout === 'function') {
         callback = timeout;
@@ -16,13 +16,13 @@ export default function(endpoint, countryCode, docNumber, timeout, callback) {
 
     if(!countries.includes(countryCode) || docNumber.length <= 0) {
         return process.nextTick(() => {
-            callback(new Error(getErrorMessage("INVALID_INPUT")))
+            callback(getErrorMessage("INVALID_INPUT"))
         })
     }
 
     if(endpoint !== "tin" && endpoint !== "vat") {
         return process.nextTick(() => {
-            callback(new Error(getErrorMessage("INVALID_ENDPOINT")))
+            callback(getErrorMessage("INVALID_ENDPOINT"))
         })
     }
 
@@ -33,7 +33,7 @@ export default function(endpoint, countryCode, docNumber, timeout, callback) {
         soapBodyTemplate: baseConfig.soapBodyTemplate[endpoint]
     };
 
-    const parsedUrl = url.parse(config.serviceUrl)
+    const parsedUrl = await url.parse(config.serviceUrl)
 
     let headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -41,6 +41,7 @@ export default function(endpoint, countryCode, docNumber, timeout, callback) {
         'Accept' : 'text/html,application/xhtml+xml,application/xml,text/xml;q=0.9,*/*;q=0.8',
         'Accept-Encoding': 'none',
         'Accept-Charset': 'utf-8',
+        'Access-Control-Allow-Origin': '*',
         'Connection': 'close',
         'Host' : parsedUrl.hostname,
         'SOAPAction': config.soapAction
@@ -64,7 +65,7 @@ export default function(endpoint, countryCode, docNumber, timeout, callback) {
 
     const requester = endpoint === "tin" ? https : http;
 
-    const req = requester.request(options, (res) => {
+    const req = await requester.request(options, (res) => {
         res.setEncoding('utf8');
         let str = '';
 
@@ -86,7 +87,7 @@ export default function(endpoint, countryCode, docNumber, timeout, callback) {
             }
 
             if(data && data.faultString != null && data.faultString.length > 0) {
-                err = new Error(getErrorMessage(data.faultString));
+                err = getErrorMessage(data.faultString);
                 err.code = data.faultString;
                 return callback(err);
             }
@@ -102,9 +103,11 @@ export default function(endpoint, countryCode, docNumber, timeout, callback) {
     }
 
     req.on('error', (e) => {
-        callback()
+        return callback(e)
     });
+
     req.write(xml);
+
     return req.end();
 
 }

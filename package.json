@@ -1,13 +1,14 @@
 {
   "name": "eu-tin-validation",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "Javascript function to check TIN and VAT validation using European SOAP Service inspired by validate-vat @viruschidai",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "ask": "npm run-script build && node ./lib/test.js",
     "watch": "rollup -c --watch",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,7 @@
   ],
   "author": "Opificio Lamantini Anonimi",
   "license": "ISC",
-  "dependencies": {
-    "http": "0.0.0",
-    "https": "^1.0.0",
-    "url": "^0.11.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

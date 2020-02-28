@@ -1,7 +1,9 @@
+const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+
 export default {
     serviceUrl: {
-        tin: "https://ec.europa.eu/taxation_customs/tin/services/checkTinService",
-        vat: "http://ec.europa.eu/taxation_customs/vies/services/checkVatService"
+        tin: proxyUrl + "https://ec.europa.eu/taxation_customs/tin/services/checkTinService",
+        vat: proxyUrl + "http://ec.europa.eu/taxation_customs/vies/services/checkVatService"
     },
     soapAction: {
         tin: 'urn:ec.europa.eu:taxud:tin:services:checkTin/checkTin',
