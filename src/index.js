@@ -9,10 +9,14 @@ import parseSoapResponse from './lib/parseSoapResponse';
 
 export default async function(endpoint, countryCode, docNumber, timeout, callback) {
 
+    console.log(1)
+
     if(typeof timeout === 'function') {
         callback = timeout;
         timeout = null;
     }
+
+        console.log(2)
 
     if(!countries.includes(countryCode) || docNumber.length <= 0) {
         return process.nextTick(() => {
@@ -20,11 +24,15 @@ export default async function(endpoint, countryCode, docNumber, timeout, callbac
         })
     }
 
+        console.log(3)
+
     if(endpoint !== "tin" && endpoint !== "vat") {
         return process.nextTick(() => {
             callback(getErrorMessage("INVALID_ENDPOINT"))
         })
     }
+
+        console.log(4)
 
     let config = {
         ...baseConfig,
@@ -33,7 +41,11 @@ export default async function(endpoint, countryCode, docNumber, timeout, callbac
         soapBodyTemplate: baseConfig.soapBodyTemplate[endpoint]
     };
 
+        console.log(5)
+
     const parsedUrl = await url.parse(config.serviceUrl)
+
+        console.log(6, parsedUrl)
 
     let headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -73,6 +85,8 @@ export default async function(endpoint, countryCode, docNumber, timeout, callbac
             str += chunk;
         })
 
+        console.log(res)
+
         res.on('end', () => {
 
             let data, err;
@@ -86,6 +100,8 @@ export default async function(endpoint, countryCode, docNumber, timeout, callbac
                 return callback(err)
             }
 
+            console.log(data)
+
             if(data && data.faultString != null && data.faultString.length > 0) {
                 err = getErrorMessage(data.faultString);
                 err.code = data.faultString;
@@ -95,6 +111,8 @@ export default async function(endpoint, countryCode, docNumber, timeout, callbac
             return callback(null, data);
         })
     });
+
+    console.log(options)
 
     if(timeout) {
         req.setTimeout(timeout, () => {
